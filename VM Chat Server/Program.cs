@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace ChatClient
+namespace VM_Chat_Server
 {
     public class ChatServer
     {
