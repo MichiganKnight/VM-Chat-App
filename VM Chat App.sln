@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VM Chat App", "VM Chat App.csproj", "{5D8BB64A-AF3C-471D-A04E-67172E6AC640}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D8BB64A-AF3C-471D-A04E-67172E6AC640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D8BB64A-AF3C-471D-A04E-67172E6AC640}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D8BB64A-AF3C-471D-A04E-67172E6AC640}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D8BB64A-AF3C-471D-A04E-67172E6AC640}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F91A0E1-F363-4F22-B3DA-97E1329353DD}
+	EndGlobalSection
+EndGlobal
