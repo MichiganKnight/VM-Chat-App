@@ -30,9 +30,9 @@ namespace ChatClient
             }
         }
 
-        private static void HandleClient(TcpClient tcpClient)
+        private static void HandleClient(object? tcpClient)
         {
-            TcpClient client = tcpClient;
+            TcpClient client = (TcpClient)tcpClient;
 
             NetworkStream stream = client.GetStream();
 
