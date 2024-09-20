@@ -13,7 +13,7 @@ namespace VM_Chat_Server
         {
             _users = [];
 
-            _listener = new(IPAddress.Parse("10.0.0.44"), 442);
+            _listener = new(IPAddress.Parse("10.0.0.10"), 442);
             _listener.Start();
 
             while (true)
@@ -41,6 +41,36 @@ namespace VM_Chat_Server
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                 }
             }
+        }
+
+        public static void BroadcastMessage(string message)
+        {
+            foreach (Client user in _users)
+            {
+                PacketBuilder msgPacket = new();
+                msgPacket.WriteOpCode(5);
+                msgPacket.WriteMessage(message);
+
+                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+            }
+        }
+
+        public static void BroadcastDisconnect(string uid)
+        {
+            Client? disconnectedUser = _users.Where(x => x.UID.ToString() == uid).FirstOrDefault();
+
+            _users.Remove(disconnectedUser);
+
+            foreach (Client user in _users)
+            {
+                PacketBuilder broadcastPacket = new();
+                broadcastPacket.WriteOpCode(10);
+                broadcastPacket.WriteMessage(uid);
+
+                user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+            }
+
+            BroadcastMessage($"[{disconnectedUser.Username}] Disconnected");
         }
     }
 }

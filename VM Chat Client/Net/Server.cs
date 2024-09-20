@@ -10,6 +10,8 @@ namespace VM_Chat_Client.Net
         public PacketReader PacketReader;
 
         public event Action connectedEvent;
+        public event Action msgReceivedEvent;
+        public event Action userDisconnectedEvent;
 
         public Server()
         {
@@ -20,7 +22,7 @@ namespace VM_Chat_Client.Net
         {
             if (!_client.Connected)
             {
-                _client.Connect("10.0.0.44", 442);
+                _client.Connect("10.0.0.10", 442);
 
                 PacketReader = new(_client.GetStream());
 
@@ -28,7 +30,7 @@ namespace VM_Chat_Client.Net
                 {
                     PacketBuilder connectPacker = new();
                     connectPacker.WriteOpCode(0);
-                    connectPacker.WriteString(username);
+                    connectPacker.WriteMessage(username);
 
                     _client.Client.Send(connectPacker.GetPacketBytes());
                 }
@@ -50,11 +52,26 @@ namespace VM_Chat_Client.Net
                         case 1:
                             connectedEvent?.Invoke();
                             break;
+                        case 5:
+                            msgReceivedEvent?.Invoke();
+                            break;
+                        case 10:
+                            userDisconnectedEvent?.Invoke();
+                            break;
                         default:
                             break;
                     }
                 }
             });
+        }
+
+        public void SendMessageToServer(string message)
+        {
+            PacketBuilder messagePacket = new();
+            messagePacket.WriteOpCode(5);
+            messagePacket.WriteMessage(message);
+
+            _client.Client.Send(messagePacket.GetPacketBytes());
         }
     }
 }

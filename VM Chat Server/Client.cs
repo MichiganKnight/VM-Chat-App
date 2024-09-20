@@ -22,6 +22,43 @@ namespace VM_Chat_Server
             Username = _packetReader.ReadMessage();
 
             Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {Username}");
+
+            Task.Run(Process);
+        }
+
+        private void Process()
+        {
+            while ( true )
+            {
+                try
+                {
+                    byte opcode = _packetReader.ReadByte();
+
+                    switch (opcode)
+                    {
+                        case 5:
+                            string msg = _packetReader.ReadMessage();
+
+                            Console.WriteLine($"[{DateTime.Now}]: Message Received: {msg}");
+
+                            ChatServer.BroadcastMessage($"[{DateTime.Now}]: [{Username}]: {msg}");
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"[{UID}]: Disconnected");
+
+                    ChatServer.BroadcastDisconnect(UID.ToString());
+
+                    ClientSocket.Close();
+
+                    break;
+                }
+            }
         }
     }
 }
